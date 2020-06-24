@@ -15,13 +15,13 @@ organizations:
     - peer1.org3.example.com
 peers:
   peer0.org3.example.com:
-    url: grpcs://localhost:11051
+    url: grpcs://172.104.120.52:11051
     tlsCACerts:
       path: org3-artifacts/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
     grpcOptions:
       ssl-target-name-override: peer0.org3.example.com
   peer1.org3.example.com:
-    url: grpcs://localhost:12051
+    url: grpcs://172.104.120.52:12051
     tlsCACerts:
       path: org3-artifacts/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
     grpcOptions:
