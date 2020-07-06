@@ -12,6 +12,8 @@ import org.hyperledger.fabric.gateway.Gateway;
 import org.hyperledger.fabric.gateway.Network;
 import org.hyperledger.fabric.gateway.Wallet;
 
+import com.xtremeapp.fabric.core.enums.CONFIG_STR;
+
 public class ClientApp {
 
 	static {
@@ -19,17 +21,21 @@ public class ClientApp {
 	}
 
 	public static void main(String[] args) throws Exception {
+		// get userId
+		String userId = CONFIG_STR.USER_ID.toString();
+		
 		// Load a file system based wallet for managing identities.
 		Path walletPath = Paths.get("wallet");
 		Wallet wallet = Wallet.createFileSystemWallet(walletPath);
 
 		// load a CCP
-		Path networkConfigPath = Paths.get("..", "..", "first-network", "connection-org1.yaml");
+		Path networkConfigPath = Paths.get("network", "connection-org1.yaml");
 
 		Gateway.Builder builder = Gateway.createBuilder();
-		builder.identity(wallet, "user1").networkConfig(networkConfigPath).discovery(true);
+		builder.identity(wallet, userId).networkConfig(networkConfigPath).discovery(true);
 
 		// create a gateway connection
+		System.out.println("connnection start");
 		try (Gateway gateway = builder.connect()) {
 
 			// get the network and contract
@@ -38,9 +44,12 @@ public class ClientApp {
 
 			byte[] result;
 
+			System.out.println("queryAllCars start");
 			result = contract.evaluateTransaction("queryAllCars");
 			System.out.println(new String(result));
 
+			System.out.println("queryAllCars end");
+			/*
 			contract.submitTransaction("createCar", "CAR10", "VW", "Polo", "Grey", "Mary");
 
 			result = contract.evaluateTransaction("queryCar", "CAR10");
@@ -50,7 +59,11 @@ public class ClientApp {
 
 			result = contract.evaluateTransaction("queryCar", "CAR10");
 			System.out.println(new String(result));
+			*/
+		} catch (Exception e) {
+			System.out.println("Error while connnecting:" + e);
 		}
+		System.out.println("connnection end");
 	}
 
 }
