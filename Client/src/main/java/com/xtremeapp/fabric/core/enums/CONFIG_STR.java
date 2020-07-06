@@ -1,7 +1,7 @@
 package com.xtremeapp.fabric.core.enums;
 
 public enum CONFIG_STR {
-	USER_ID("user13")
+	USER_ID("user1")
 	;
 
     private final String str;
